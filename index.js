@@ -4,7 +4,7 @@ const fs = require('fs');
 const encrypt = require('./src/encrypt');
 const decrypt = require('./src/decrypt');
 
-if (process.argv.length < 4) {
+if (process.argv.length < 5) {
     console.error('Usage: node script.js <command> <file> <token>');
     process.exit(1);
 }
