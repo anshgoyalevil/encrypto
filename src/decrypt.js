@@ -13,7 +13,6 @@ async function decrypt(inputFilePath, token) {
     const decipher = crypto.createDecipher(algorithm, token);
     let decryptedData = decipher.update(encryptedData, 'hex', 'utf8');
     decryptedData += decipher.final('utf8');
-    console.log(decryptedData)
     const separatorIndex = decryptedData.indexOf('@');
     if (separatorIndex === -1) {
         throw new Error('Invalid encrypted file format');
