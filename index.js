@@ -1,14 +1,17 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const encrypt = require('./src/encrypt');
 const decrypt = require('./src/decrypt');
 
 if (process.argv.length < 4) {
-    console.error('Usage: node script.js <command> <file>');
+    console.error('Usage: node script.js <command> <file> <token>');
     process.exit(1);
 }
 
 const command = process.argv[2];
 const filePath = process.argv[3];
+const token = process.argv[4];
 
 if (!['encrypt', 'decrypt'].includes(command)) {
     console.error('Invalid command. Please use "encrypt" or "decrypt"');
@@ -25,8 +28,13 @@ if (!fs.existsSync(filePath)) {
     process.exit(1);
 }
 
+if (!token) {
+    console.error('Please specify the token');
+    process.exit(1);
+}
+
 if (command === 'encrypt') {
-    encrypt(filePath).catch(console.error);
+    encrypt(filePath, token).catch(console.error);
 } else if (command === 'decrypt') {
-    decrypt(filePath).catch(console.error);
+    decrypt(filePath, token).catch(console.error);
 }
