@@ -20,11 +20,29 @@ async function encrypt(inputFilePath, token) {
     console.log(fileInfoString)
     const base64Data = Buffer.from(inputFile).toString('base64');
     const dataToEncrypt = fileInfoString + '@' + base64Data; // Use ':' as a separator
-    const cipher = crypto.createCipher(algorithm, token);
+
+    // Generate key from token
+    const key = token.slice(0, 32);
+    
+    // Generate a random initialization vector
+    const iv = crypto.randomBytes(16);
+    
+    // Create a cipher using createCipheriv
+    const cipher = crypto.createCipheriv(algorithm, key, iv);
+
+    // Encrypt the data
     let encryptedData = cipher.update(dataToEncrypt, 'utf8', 'hex');
     encryptedData += cipher.final('hex');
+
+    // Combine IV and encrypted data
+    const encryptedDataWithIV = iv.toString('hex') + encryptedData;
+
+    // Define output path
     const outputPath = path.join(path.dirname(inputFilePath), fileInfo.name + '.txt');
-    await writeFileAsync(outputPath, encryptedData, 'utf8');
+
+    // Write the encrypted data to file
+    await writeFileAsync(outputPath, encryptedDataWithIV, 'utf8');
+
     console.log('File encrypted successfully:', outputPath);
 }
 
