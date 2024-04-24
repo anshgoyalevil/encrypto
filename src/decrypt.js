@@ -8,7 +8,7 @@ const readFileAsync = promisify(fs.readFile);
 
 const algorithm = 'aes-256-cbc'; // Using AES encryption algorithm
 
-async function decrypt(inputFilePath, token) {
+async function decrypt(inputFilePath, token, outputFolderPath) {
 
     // Generate key from token
     const key = token.slice(0, 32);
@@ -36,7 +36,7 @@ async function decrypt(inputFilePath, token) {
     const fileInfo = JSON.parse(fileInfoString);
 
     // Define the output path for the decrypted file
-    const outputPath = path.join(path.dirname(inputFilePath), 'decrypted_' + fileInfo.name);
+    const outputPath = path.join(outputFolderPath, 'decrypted_' + fileInfo.name);
 
     // Write the base64 data to file after decoding it
     await writeFileAsync(outputPath, Buffer.from(base64Data, 'base64'));

@@ -8,7 +8,7 @@ const statAsync = promisify(fs.stat);
 
 const algorithm = 'aes-256-cbc'; // Using AES encryption algorithm
 
-async function encrypt(inputFilePath, token) {
+async function encrypt(inputFilePath, token, outputFolderPath) {
     const inputFile = fs.readFileSync(inputFilePath);
     const fileStats = await statAsync(inputFilePath);
     const fileInfo = {
@@ -38,7 +38,7 @@ async function encrypt(inputFilePath, token) {
     const encryptedDataWithIV = iv.toString('hex') + encryptedData;
 
     // Define output path
-    const outputPath = path.join(path.dirname(inputFilePath), fileInfo.name + '.txt');
+    const outputPath = path.join(outputFolderPath, fileInfo.name + '.txt');
 
     // Write the encrypted data to file
     await writeFileAsync(outputPath, encryptedDataWithIV, 'utf8');

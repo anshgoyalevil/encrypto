@@ -10,7 +10,7 @@ npm install -g encryptox
 ```
 2. Run the program like
 ```bash
-encryptox <encrypt/decrypt> <filepath> <password>
+encryptox <encrypt/decrypt> <filepath> <password> [<outputFolderPath>]
 ```
 
 #### Note:
@@ -26,7 +26,7 @@ encryptox <encrypt/decrypt> <filepath> <password>
 
 - To encrypt a text file:
 ```bash
-encryptox encrypt letter.txt mysecret
+encryptox encrypt letter.txt mysecret ./output
 ```
 
 This would output a `encrypted.txt` file with the encrypted text.

@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
+const path = require('path');
 const encrypt = require('./src/encrypt');
 const decrypt = require('./src/decrypt');
 
 if (process.argv.length < 5) {
-    console.error('Usage: node script.js <command> <file> <token>');
+    console.error('Usage: node script.js <command> <file> <token> [<outputFolderPath>]');
     process.exit(1);
 }
 
 const command = process.argv[2];
 const filePath = process.argv[3];
 const token = process.argv[4];
+let outputFolderPath = process.argv[5];
 
 if (!['encrypt', 'decrypt'].includes(command)) {
     console.error('Invalid command. Please use "encrypt" or "decrypt"');
@@ -33,8 +35,16 @@ if (!token) {
     process.exit(1);
 }
 
+if (!outputFolderPath) {
+    // If output folder path is not provided, use the same folder as the input file
+    outputFolderPath = path.dirname(filePath);
+} else if (!fs.existsSync(outputFolderPath)) {
+    console.error('Output folder does not exist:', outputFolderPath);
+    process.exit(1);
+}
+
 if (command === 'encrypt') {
-    encrypt(filePath, token).catch(console.error);
+    encrypt(filePath, token, outputFolderPath).catch(console.error);
 } else if (command === 'decrypt') {
-    decrypt(filePath, token).catch(console.error);
+    decrypt(filePath, token, outputFolderPath).catch(console.error);
 }
