@@ -1,6 +1,6 @@
 ## Encryptox
 
-A powerful encryption tool that can encrypt and decrypt any file type.
+A powerful encryption tool that can encrypt and decrypt any file type using the `AES-256-CBC` encryption algorithm.
 
 ### How to use?
 
@@ -12,6 +12,15 @@ npm install -g encryptox
 ```bash
 encryptox <encrypt/decrypt> <filepath> <password>
 ```
+
+#### Note:
+- The `encrypt` and `decrypt` commands are case-sensitive.
+- The`password` needs to be at least 32 characters long since the `AES-256-CBC` encryption algorithm requires a 32-byte (256-bit) key.
+- You can generate a 32-character password using the following command:
+    ```bash
+    openssl rand -hex 32
+    ```
+- Make sure you store the generate password in a secure location since it is required to decrypt the file/s.
 
 ### Example Usage:
 
